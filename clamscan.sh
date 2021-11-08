@@ -11,4 +11,4 @@ else
 
   clamscan -ri "$S";
 done
-fi"
+fi
