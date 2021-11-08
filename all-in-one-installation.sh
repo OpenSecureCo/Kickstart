@@ -38,6 +38,8 @@ wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/Freshclam.con
 
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/scan.conf -O /etc/clamd.d/scan.conf
 
+mkdir /root/scripts/
+
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/clamscan.sh -O /root/scripts/clamscan.sh
 
 chmod +x /root/scripts/clamscan.sh
