@@ -4,6 +4,7 @@ $MyApp.Uninstall()
 Start-Sleep -s 15
 Remove-Item 'C:\Program Files (x86)\ossec-agent' -Recurse –Force
 New-Item -Path "C:\" -Name "Wazuh" -ItemType "directory"
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
 Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.2.4-1.msi -OutFile wazuh-agent.msi; ./wazuh-agent.msi /q WAZUH_MANAGER='w.g4ns.com' WAZUH_REGISTRATION_PASSWORD='ytrHWtpxQ986G8Jt' WAZUH_REGISTRATION_SERVER='w.g4ns.com' WAZUH_AGENT_GROUP='Windows' 
 
