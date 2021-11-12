@@ -5,7 +5,7 @@ Start-Sleep -s 15
 Remove-Item 'C:\Program Files (x86)\ossec-agent' -Recurse –Force
 New-Item -Path "C:\" -Name "Wazuh" -ItemType "directory"
 
-Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.2.4-1.msi -OutFile wazuh-agent.msi; ./wazuh-agent.msi /q WAZUH_MANAGER='' WAZUH_REGISTRATION_KEY='C:\Wazuh\sslagent.key' WAZUH_REGISTRATION_CERTIFICATE='C:\Wazuh\sslagent.cert' WAZUH_REGISTRATION_SERVER='' WAZUH_AGENT_GROUP='Windows' 
+Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.2.4-1.msi -OutFile wazuh-agent.msi; ./wazuh-agent.msi /q WAZUH_MANAGER='w.g4ns.com' WAZUH_REGISTRATION_PASSWORD='ytrHWtpxQ986G8Jt' WAZUH_REGISTRATION_SERVER='w.g4ns.com' WAZUH_AGENT_GROUP='Windows' 
 
 <#
 .SYNOPSIS
