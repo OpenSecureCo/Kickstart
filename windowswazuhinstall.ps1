@@ -8,6 +8,21 @@ New-Item -Path "C:\" -Name "Wazuh" -ItemType "directory"
 
 Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.2.4-1.msi -OutFile wazuh-agent.msi; ./wazuh-agent.msi /q WAZUH_MANAGER='w.g4ns.com' WAZUH_REGISTRATION_PASSWORD='ytrHWtpxQ986G8Jt' WAZUH_REGISTRATION_SERVER='w.g4ns.com' WAZUH_AGENT_GROUP='G4NS' 
 
+$config = "<ossec_config>
+<client>
+    <server>
+      <address>w.g4ns.com</address>
+      <port>1514</port>
+      <protocol>tcp</protocol>
+    </server>
+    <crypto_method>aes</crypto_method>
+    <notify_time>10</notify_time>
+    <time-reconnect>60</time-reconnect>
+    <auto_restart>yes</auto_restart>
+  </client>
+  </ossec_config>"
+$config | Out-File C:\Program Files (x86)\ossec-agent\ossec.conf
+
 <#
 .SYNOPSIS
 Install-Sysmon downloads the Sysmon executables archive and installs Sysmon64.exe
