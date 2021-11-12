@@ -20,7 +20,7 @@ The path to the working directory.  Default is user Documents.
 Install-Sysmon -path C:\Users\example\Desktop
 #>
 
-[CmdletBinding()]
+<#[CmdletBinding()]#>
 
 #Establish parameters for path
 param (
