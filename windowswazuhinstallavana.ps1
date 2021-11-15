@@ -25,7 +25,7 @@ Install-Sysmon -path C:\Users\example\Desktop
 
 #Establish parameters for path
 param (
-    [string]$path=[Environment]::GetFolderPath("Desktop")   
+    [string]$path=[Environment]::GetFolderPath("C:\Windows\sysmon")   
 )
 
 #Test path and create it if required
