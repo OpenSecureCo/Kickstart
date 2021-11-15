@@ -381,5 +381,5 @@ WantedBy=multi-user.target" > /usr/lib/systemd/system/suricata.service
 systemctl daemon-reload
 systemctl enable suricata
 echo "Test running Suricata"
-systemctl start suricata
+#systemctl start suricata
 echo "Installation of Suricata is complete. Observe the /var/log/suricata/suricata.log file to view any startup errors."
