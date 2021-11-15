@@ -247,11 +247,8 @@ if [ $? != 0 ] ; then
    fi
 suricata-update list-sources
 clear
-echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
-echo "Enabling rules - secret code is 8350622693964949"
-echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
 sleep 5
-suricata-update enable-source et/pro
+#suricata-update enable-source et/pro
 suricata-update enable-source oisf/trafficid
 suricata-update enable-source sslbl/ja3-fingerprints
 suricata-update enable-source ptresearch/attackdetection
