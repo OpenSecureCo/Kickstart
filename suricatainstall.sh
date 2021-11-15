@@ -128,7 +128,7 @@ gpgcheck=1
 enabled=0
 gpgkey=file:///etc/pki/rpm-gpg/RPM-GPG-KEY-CentOS-7" > /etc/yum.repos.d/CentOS-Base.repo
 
-wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+wget https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm --no-check-certificate
 
 yum install epel-release-latest-7.noarch.rpm -y
 
@@ -140,7 +140,7 @@ libnetfilter_queue-devel lua-devel
 
 yum install cargo -y
 yum install PyYAML -y
-wget https://distrib-coffee.ipsl.jussieu.fr/pub/linux/Mageia/distrib/7.1/x86_64/media/core/updates/lib64htp2-4.1.9-1.mga7.x86_64.rpm
+wget https://distrib-coffee.ipsl.jussieu.fr/pub/linux/Mageia/distrib/7.1/x86_64/media/core/updates/lib64htp2-4.1.9-1.mga7.x86_64.rpm --no-check-certificate
 yum install lib64htp2-4.1.9-1.mga7.x86_64.rpm -y
 yum install cmake ragel -y
 yum install boost-devel -y
@@ -175,7 +175,7 @@ if [ $? != 0 ] ; then
    echo "It looks like you need to install Boost and Hyperscan. Continuing..."
    echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
    sleep 5
-   wget https://sourceforge.net/projects/boost/files/boost/1.75.0/boost_1_75_0.tar.gz
+   wget https://sourceforge.net/projects/boost/files/boost/1.75.0/boost_1_75_0.tar.gz --no-check-certificate
    tar xvzf boost_1_75_0.tar.gz
    cd /opt/boost_1_75_0/
    /opt/boost_1_75_0/bootstrap.sh --prefix=/opt/boost
