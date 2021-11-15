@@ -1,4 +1,5 @@
 #!/bin/bash
+#curl -so ~/suricatainstall.sh https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/suricatainstall.sh && chmod +x ~/suricatainstall.sh && bash ~/suricatainstall.sh
 touch /tmp/install_log.log
 rm /tmp/install_log.log
 yum install wget -y
