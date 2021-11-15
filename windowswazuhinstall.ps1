@@ -2,7 +2,7 @@ Stop-Service -Name "Wazuh"
 $MyApp = Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "Wazuh Agent"}
 $MyApp.Uninstall()
 Start-Sleep -s 15
-Remove-Item 'C:\Program Files (x86)\ossec-agent' -Recurse -Force
+Remove-Item 'C:\Program Files (x86)\ossec-agent' -Force -Recurse
 New-Item -Path "C:\" -Name "Wazuh" -ItemType "directory"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
