@@ -9,7 +9,7 @@
 ##########
 
 # Your OTX API KEY
-$otxkey = "Your_API_KEY"
+$otxkey = "d018066845a9b29a57c42157ba2b19d534af2813b05b57ed74b3c1ad580b949d"
 # Read the Alert that triggered the Active Response in manager and convert to Array
 $INPUT_JSON = Read-Host
 $INPUT_ARRAY = $INPUT_JSON | ConvertFrom-Json 
