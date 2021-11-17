@@ -69,7 +69,7 @@ Write-Host "Sysmon Installed!"
 
 Write-Host "Installing PowerShell7"
 
-Invoke-WebRequest -Uri https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/PowerShell-7.2.0-win-x64.msi -OutFile PowerShell-7.2.0-win-x64.msi; ./PowerShell-7.2.0-win-x64.msi /nobanner /accepteula -NoNewWindow -Wait
+Invoke-WebRequest -Uri https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/PowerShell-7.2.0-win-x64.msi -OutFile PowerShell-7.2.0-win-x64.msi; ./PowerShell-7.2.0-win-x64.msi /q
 
 New-Item -Path "C:\Windows" -Name "PowerShell7" -ItemType "directory"
 
