@@ -25,7 +25,7 @@ Install-Sysmon -path C:\Users\example\Desktop
 
 #Establish parameters for path
 param (
-    [string]$path=[Environment]::GetFolderPath("Desktop")   
+    [string]$path=[Environment]::GetFolderPath("Windows")   
 )
 
 #Test path and create it if required
@@ -66,3 +66,9 @@ Write-Host "Installing Sysmon..."
 .\sysmon64.exe -accepteula -i sysmonconfig-export.xml
 
 Write-Host "Sysmon Installed!"
+
+Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.2.4-1.msi -OutFile wazuh-agent.msi; ./wazuh-agent.msi
+
+Write-Host "Installing PowerShell7"
+
+Invoke-WebRequest -Uri https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/PowerShell-7.2.0-win-x64.msi -OutFile PowerShell-7.2.0-win-x64.msi; ./PowerShell-7.2.0-win-x64.msi
