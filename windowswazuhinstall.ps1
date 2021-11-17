@@ -72,3 +72,19 @@ Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.2.4-
 Write-Host "Installing PowerShell7"
 
 Invoke-WebRequest -Uri https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/PowerShell-7.2.0-win-x64.msi -OutFile PowerShell-7.2.0-win-x64.msi; ./PowerShell-7.2.0-win-x64.msi
+
+New-Item -Path "C:\Windows" -Name "PowerShell7" -ItemType "directory"
+
+cd C:\Windows\PowerShell7
+
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/alienvault_otx.ps1 -OutFile alienvault_otx.ps1
+
+cd 'C:\Program Files (x86)\ossec-agent\active-response\bin'
+
+Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/otx.cmd -OutFile otx.cmd
+
+
+Write-Host "Complete!"
+
+
+
