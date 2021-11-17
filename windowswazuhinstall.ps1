@@ -1,3 +1,4 @@
+#Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/windowswazuhinstall.ps1 -OutFile windowswazuhinstall.ps1; ./windowswazuhinstall.ps1
 Stop-Service -Name "Wazuh"
 $MyApp = Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "Wazuh Agent"}
 $MyApp.Uninstall()
