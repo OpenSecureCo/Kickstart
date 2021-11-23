@@ -1,0 +1,38 @@
+<decoder name="sentinel_events">
+    <prematch>\.*sentinel</prematch>
+</decoder>
+<decoder name="sentinel_events_threat_status_changed">
+    <parent>sentinel_events</parent>
+    <prematch offset="after_parent">\.*Threat status changed</prematch>
+    <regex offset="after_parent">\.*fileHash\p(\.+) \.*filePath\p(\.+) \.*cat\p(\.+) \.*rt\p(\.+) \.*activityID\p(\.+) \.*activityType\p(\.+) \.*siteId\p(\.+) \.*siteName\p(\.+) account</regex>
+    <order>filehash,filepath,category,rt,activityid,activitytype,siteid,sitename</order>
+</decoder>
+<decoder name="sentinel_events_analyst_verdict_changed">
+    <parent>sentinel_events</parent>
+    <prematch offset="after_parent">\.*Analyst verdict changed</prematch>
+    <regex offset="after_parent">\.*suser\p(\.+) \.*fileName\p(\.+) \.*oldValue\p(\.+) \.*newValue\p(\.+) \.*cat\p(\.+) \.*rt\p(\.+) \.*activityID\p(\.+) \.*activityType\p(\.+) \.*siteId\p(\.+) \.*siteName\p(\.+) account</regex>
+    <order>user,filename,oldvalue,newvalue,category,rt,activityid,activitytype,siteid,sitename</order>
+</decoder>
+<!--
+<decoder name="sentinel_events_analyst_verdict_changed">
+    <parent>sentinel_events</parent>
+    <prematch offset="after_parent">\.*Analyst verdict changed</prematch>
+    <regex offset="after_parent">\.*suser\p(\.+) \.*fileName\p(\.+) \.*oldValue\p(\.+) \.*newValue\p(\.+) \.*cat\p(\.+) \.*rt\p(\.+) \.*activityID\p(\.+) \.*activityType\p(\.+) \.*siteId\p(\.+) \.*siteName\p(\.+) account</regex>
+    <order>user,filename,oldvalue,newvalue,category,rt,activityid,activitytype,siteid,sitename</order>
+</decoder>
+-->
+<!--
+<decoder name="sentinel_events_new_active_threat">
+    <parent>sentinel_events</parent>
+    <prematch offset="after_parent">\.*New active threat</prematch>
+    <regex offset="after_parent">\.*rt\p(\.+)</regex>
+    <order>filehash</order>
+</decoder>
+-->
+<!--
+<decoder name="sentinel_events2">
+    <parent>sentinel_events</parent>
+    <regex>\.*fileHash\p(\.+) \.*filePath\p(\.+)</regex>
+    <order>filehash,filepath</order>
+</decoder>
+-->
