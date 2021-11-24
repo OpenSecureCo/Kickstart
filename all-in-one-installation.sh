@@ -51,5 +51,10 @@ wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/auditd.conf -
 
 auditctl -R /etc/audit/rules.d/audit.rules
 
+curl -L https://pkg.osquery.io/rpm/GPG | tee /etc/pki/rpm-gpg/RPM-GPG-KEY-osquery
+yum-config-manager --add-repo https://pkg.osquery.io/rpm/osquery-s3-rpm.repo
+yum-config-manager --enable osquery-s3-rpm
+yum install osquery
+
 
 echo "Congrats"
