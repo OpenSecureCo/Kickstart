@@ -63,3 +63,18 @@ wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/auditd.conf -
 auditctl -R /etc/audit/rules.d/audit.rules
 
 echo "Congrats"
+
+ls /etc/nginx*
+if [ $? != 0 ] ; then
+   clear
+   echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+   echo "Please install nginx first..."
+   echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+   sleep 5
+   else
+   echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+   echo "It looks like you need to install Modsecurity. Continuing......"
+   echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+   sleep 3
+   curl -so ~/modsecinstall.sh https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/modsecinstall && bash ~/modsecinstall.sh
+   fi
