@@ -1,4 +1,15 @@
 #!/bin/bash
+curl -L https://pkg.osquery.io/rpm/GPG | tee /etc/pki/rpm-gpg/RPM-GPG-KEY-osquery
+yum-config-manager --add-repo https://pkg.osquery.io/rpm/osquery-s3-rpm.repo
+yum-config-manager --enable osquery-s3-rpm
+yum install osquery -y
+
+wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/osquery.conf -O /etc/osquery/osquery.conf
+
+systemctl start osqueryd
+sleep 3
+systemctl stop osqueryd
+
 service wazuh-agent stop
 yum remove wazuh-agent -y
 rm -rf /var/ossec/
@@ -50,16 +61,5 @@ echo "0 8 * * * /root/scripts/clamscan.sh" >> /etc/crontab
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/auditd.conf -O /etc/audit/rules.d/audit.rules
 
 auditctl -R /etc/audit/rules.d/audit.rules
-
-curl -L https://pkg.osquery.io/rpm/GPG | tee /etc/pki/rpm-gpg/RPM-GPG-KEY-osquery
-yum-config-manager --add-repo https://pkg.osquery.io/rpm/osquery-s3-rpm.repo
-yum-config-manager --enable osquery-s3-rpm
-yum install osquery -y
-
-wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/osquery.conf -O /etc/osquery/osquery.conf
-
-systemctl start osqueryd
-sleep 3
-systemctl stop osqueryd
 
 echo "Congrats"
