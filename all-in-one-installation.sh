@@ -13,13 +13,13 @@ systemctl stop osqueryd
 service wazuh-agent stop
 yum remove wazuh-agent -y
 rm -rf /var/ossec/
-WAZUH_MANAGER='104.181.152.45' WAZUH_AGENT_GROUP='test' yum install https://packages.wazuh.com/4.x/yum/wazuh-agent-4.2.4-1.x86_64.rpm -y
+WAZUH_MANAGER='logs.vervantis.com' WAZUH_AGENT_GROUP='default' yum install https://packages.wazuh.com/4.x/yum/wazuh-agent-4.2.4-1.x86_64.rpm -y
 echo "logcollector.remote_commands=1" >> /var/ossec/etc/local_internal_options.conf
 echo "wazuh_command.remote_commands=1" >> /var/ossec/etc/local_internal_options.conf
 echo "<ossec_config>
     <client>
     <server>
-      <address>104.181.152.45</address>
+      <address>logs.vervantis.com</address>
       <port>1514</port>
       <protocol>tcp</protocol>
     </server>
