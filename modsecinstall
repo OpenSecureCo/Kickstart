@@ -1,0 +1,35 @@
+yum install bison build-essential ca-certificates curl dh-autoreconf doxygen   flex gawk git iputils-ping libcurl4-gnutls-dev libexpat1-dev libgeoip-dev liblmdb-dev   libpcre3-dev libpcre++-dev libssl-dev libtool libxml2 libxml2-dev libyajl-dev locales   lua5.3-dev pkg-config wget zlib1g-dev zlibc libxslt libgd-dev -y
+yum install git -y
+cd /opt && sudo git clone https://github.com/SpiderLabs/ModSecurity
+cd ModSecurity
+git submodule init
+git submodule update
+yum install libtool m4 automake -y
+./build.sh
+yum install -y gcc-c++ libcurl libxml2 libmpc-devel mpfr-devel gmp-devel gcc make automake curl curl-devel httpd-devel autoconf libtool pcre pcre-devel libxml2 libxml2-devel mod_geoip GeoIP GeoIP-devel GeoIP-data zlib-devel yajl-devel lmdb-devel
+./configure
+make
+make install
+cd /opt && sudo git clone --depth 1 https://github.com/SpiderLabs/ModSecurity-nginx.git
+cd /opt
+VER=$( nginx -v 2>&1 | awk -F' ' '{print $3}' | cut -d / -f 2)
+wget http://nginx.org/download/nginx-$VER.tar.gz
+tar -xvzmf nginx-*
+cd nginx-*
+yum install libxml2-devel libxslt-devel php-gd gd-devel perl-ExtUtils-Embed google-perftools-devel -y
+./configure --prefix=/usr/share/nginx --sbin-path=/usr/sbin/nginx --modules-path=/usr/lib64/nginx/modules --add-dynamic-module=../ModSecurity-nginx --conf-path=/etc/nginx/nginx.conf --error-log-path=/var/log/nginx/error.log --http-log-path=/var/log/nginx/access.log --http-client-body-temp-path=/var/lib/nginx/tmp/client_body --http-proxy-temp-path=/var/lib/nginx/tmp/proxy --http-fastcgi-temp-path=/var/lib/nginx/tmp/fastcgi --http-uwsgi-temp-path=/var/lib/nginx/tmp/uwsgi --http-scgi-temp-path=/var/lib/nginx/tmp/scgi --pid-path=/run/nginx.pid --lock-path=/run/lock/subsys/nginx --user=nginx --group=nginx --with-compat --with-debug --with-file-aio --with-google_perftools_module --with-http_addition_module --with-http_auth_request_module --with-http_dav_module --with-http_degradation_module --with-http_flv_module --with-http_geoip_module=dynamic --with-http_gunzip_module --with-http_gzip_static_module --with-http_image_filter_module=dynamic --with-http_mp4_module --with-http_perl_module=dynamic --with-http_random_index_module --with-http_realip_module --with-http_secure_link_module --with-http_slice_module --with-http_ssl_module --with-http_stub_status_module --with-http_sub_module --with-http_v2_module --with-http_xslt_module=dynamic --with-mail=dynamic --with-mail_ssl_module --with-pcre --with-pcre-jit --with-stream=dynamic --with-stream_ssl_module --with-stream_ssl_preread_module --with-threads
+mkdir /etc/nginx/modules
+make modules
+cp objs/ngx_http_modsecurity_module.so /etc/nginx/modules/
+sed -i '1i load_module /etc/nginx/modules/ngx_http_modsecurity_module.so;' /etc/nginx/nginx.conf
+rm -rf /usr/share/modsecurity-crs
+git clone https://github.com/coreruleset/coreruleset /usr/local/modsecurity-crs
+mv /usr/local/modsecurity-crs/crs-setup.conf.example /usr/local/modsecurity-crs/crs-setup.conf
+mv /usr/local/modsecurity-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf.example /usr/local/modsecurity-crs/rules/REQUEST-900-EXCLUSION-RULES-BEFORE-CRS.conf
+mkdir -p /etc/nginx/modsec
+cp /opt/ModSecurity/unicode.mapping /etc/nginx/modsec
+cp /opt/ModSecurity/modsecurity.conf-recommended /etc/nginx/modsec/modsecurity.conf
+echo "Include /etc/nginx/modsec/modsecurity.conf
+Include /usr/local/modsecurity-crs/crs-setup.conf
+Include /usr/local/modsecurity-crs/rules/*.conf" > /etc/nginx/modsec/main.conf
+echo "Installation of Modsecurity complete. Ensure that your server blocks have the following set: modsecurity on; modsecurity_rules_file /etc/nginx/modsec/main.conf; ."
