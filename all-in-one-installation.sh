@@ -58,4 +58,8 @@ yum install osquery -y
 
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/osquery.conf -O /etc/osquery/osquery.conf
 
+systemctl start osqueryd
+sleep 3
+systemctl stop osqueryd
+
 echo "Congrats"
