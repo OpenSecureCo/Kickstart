@@ -56,5 +56,6 @@ yum-config-manager --add-repo https://pkg.osquery.io/rpm/osquery-s3-rpm.repo
 yum-config-manager --enable osquery-s3-rpm
 yum install osquery
 
+wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/osquery.conf -O /etc/osquery/osquery.conf
 
 echo "Congrats"
