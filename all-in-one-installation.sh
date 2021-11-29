@@ -54,7 +54,7 @@ auditctl -R /etc/audit/rules.d/audit.rules
 curl -L https://pkg.osquery.io/rpm/GPG | tee /etc/pki/rpm-gpg/RPM-GPG-KEY-osquery
 yum-config-manager --add-repo https://pkg.osquery.io/rpm/osquery-s3-rpm.repo
 yum-config-manager --enable osquery-s3-rpm
-yum install osquery
+yum install osquery -y
 
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/osquery.conf -O /etc/osquery/osquery.conf
 
