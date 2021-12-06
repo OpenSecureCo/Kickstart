@@ -160,6 +160,7 @@ installPrerequisites() {
         eval "export OSQUERY_KEY=1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B"
         eval "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $OSQUERY_KEY"
         eval "add-apt-repository 'deb [arch=amd64] https://pkg.osquery.io/deb deb main'"
+        eval "apt-get install auditd"
         eval "apt-get update"
     fi
 
