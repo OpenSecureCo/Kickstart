@@ -1,12 +1,8 @@
 #!/bin/bash
 
-# Program to install Wazuh manager along Open Distro for Elasticsearch
-# Copyright (C) 2015-2021, Wazuh Inc.
+# SOCFortress Kickstart script
+# Copyright (C) 2021, SOCFortress LLP.
 #
-# This program is a free software; you can redistribute it
-# and/or modify it under the terms of the GNU General Public
-# License (version 2) as published by the FSF - Free Software
-# Foundation.
 
 ## Check if system is based on yum or apt-get
 char="."
