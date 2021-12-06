@@ -220,8 +220,12 @@ installClamAV() {
     logger "Installing ClamAV..."
     if [ ${sys_type} == "zypper" ]; then
         eval "zypper -n install clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd ${debug}"
-    else
-        eval "${sys_type} install clamav-daemon clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd -y ${debug}"
+    fi
+    if [ ${sys_type} == "yum" ]; then
+        eval "yum install clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd -y ${debug}"
+    fi
+    if [ ${sys_type} == "apt-get" ]; then
+        eval "apt-get install clamav clamav-daemon -y ${debug}"
     fi
     if [  "$?" != 0  ]; then
         logger -e "ClamAVinstallation failed"
