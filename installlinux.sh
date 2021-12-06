@@ -151,6 +151,8 @@ installPrerequisites() {
         eval "curl -L https://pkg.osquery.io/rpm/GPG | tee /etc/pki/rpm-gpg/RPM-GPG-KEY-osquery"
         eval "yum-config-manager --add-repo https://pkg.osquery.io/rpm/osquery-s3-rpm.repo"
         eval "yum-config-manager --enable osquery-s3-rpm"
+        eval "yum install epel-release yum-plugin-copr -y"
+        eval "yum copr enable @oisf/suricata-6.0 -y"
     elif [ ${sys_type} == "zypper" ]; then
         eval "zypper -n install curl unzip wget ${debug}"
         eval "zypper -n install libcap-progs ${debug} || zypper -n install libcap2 ${debug}"
@@ -161,6 +163,7 @@ installPrerequisites() {
         eval "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $OSQUERY_KEY"
         eval "add-apt-repository 'deb [arch=amd64] https://pkg.osquery.io/deb deb main'"
         eval "apt-get install auditd"
+        eval "add-apt-repository ppa:oisf/suricata-stable -y"
         eval "apt-get update"
     fi
 
@@ -268,6 +271,28 @@ installOSquery() {
     fi
 
 }
+
+## Install Suricata
+installSuricata() {
+
+    logger "Installing osquery..."
+    if [ ${sys_type} == "zypper" ]; then
+        eval "WAZUH_MANAGER="$manager" zypper -n install wazuh-agent=${WAZUH_VER}-${WAZUH_REV} ${debug}"
+    else
+        eval "${sys_type} install suricata -y ${debug}"
+        eval "suricata-update"
+    fi
+    if [  "$?" != 0  ]; then
+        logger -e "Suricata installation failed"
+        rollBack
+        exit 1;
+    else
+        suricatainstalled="1"
+        logger "Done"
+    fi
+
+}
+
 
 ## Install Auditd
 installAuditd() {
@@ -399,6 +424,7 @@ main() {
         installClamAV
         installOSquery
         installAuditd
+        installSuricata
     else
         checkInstalled
         installPrerequisites
@@ -407,6 +433,7 @@ main() {
         installClamAV
         installOSquery
         installAuditd
+        installSuricata
     fi
 
 }
