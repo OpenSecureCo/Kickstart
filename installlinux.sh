@@ -269,9 +269,26 @@ installOSquery() {
 
 }
 
-##AuditD Rules and reload
-wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/auditd.conf -O /etc/audit/rules.d/audit.rules
-auditctl -R /etc/audit/rules.d/audit.rules
+## Install Auditd
+installAuditd() {
+
+    logger "Installing osquery..."
+    if [ ${sys_type} == "zypper" ]; then
+        eval "WAZUH_MANAGER="$manager" zypper -n install wazuh-agent=${WAZUH_VER}-${WAZUH_REV} ${debug}"
+    else
+        eval "wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/auditd.conf -O /etc/audit/rules.d/audit.rules"
+        eval "auditctl -R /etc/audit/rules.d/audit.rules"
+    fi
+    if [  "$?" != 0  ]; then
+        logger -e "auditd installation failed"
+        rollBack
+        exit 1;
+    else
+        auditdinstalled="1"
+        logger "Done"
+    fi
+
+}
 
 checkInstalled() {
 
@@ -381,6 +398,7 @@ main() {
         installWazuh
         installClamAV
         installOSquery
+        installAuditd
     else
         checkInstalled
         installPrerequisites
@@ -388,6 +406,7 @@ main() {
         installWazuh
         installClamAV
         installOSquery
+        installAuditd
     fi
 
 }
