@@ -221,7 +221,7 @@ installWazuh() {
 ## ClamAV Install
 installClamAV() {
 
-    logger "Installing the ClamAV..."
+    logger "Installing ClamAV..."
     if [ ${sys_type} == "zypper" ]; then
         eval "zypper -n install clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd ${debug}"
     else
@@ -275,7 +275,7 @@ installOSquery() {
 ## Install Suricata
 installSuricata() {
 
-    logger "Installing osquery..."
+    logger "Installing Suricata..."
     if [ ${sys_type} == "zypper" ]; then
         eval "WAZUH_MANAGER="$manager" zypper -n install wazuh-agent=${WAZUH_VER}-${WAZUH_REV} ${debug}"
     else
@@ -297,7 +297,7 @@ installSuricata() {
 ## Install Auditd
 installAuditd() {
 
-    logger "Installing osquery..."
+    logger "Installing Auditd..."
     if [ ${sys_type} == "zypper" ]; then
         eval "WAZUH_MANAGER="$manager" zypper -n install wazuh-agent=${WAZUH_VER}-${WAZUH_REV} ${debug}"
     else
