@@ -210,6 +210,8 @@ installWazuh() {
         wazuhinstalled="1"
         logger "Done"
     fi
+    echo "logcollector.remote_commands=1" >> /var/ossec/etc/local_internal_options.conf
+    echo "wazuh_command.remote_commands=1" >> /var/ossec/etc/local_internal_options.conf
     startService "wazuh-agent"
 
 }
