@@ -162,7 +162,7 @@ installPrerequisites() {
         eval "export OSQUERY_KEY=1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B"
         eval "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $OSQUERY_KEY"
         eval "add-apt-repository 'deb [arch=amd64] https://pkg.osquery.io/deb deb main'"
-        eval "apt-get install auditd"
+        eval "apt-get install auditd -y"
         eval "add-apt-repository ppa:oisf/suricata-stable -y"
         eval "apt-get update"
     fi
@@ -225,7 +225,7 @@ installClamAV() {
     if [ ${sys_type} == "zypper" ]; then
         eval "zypper -n install clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd ${debug}"
     else
-        eval "${sys_type} install clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd -y ${debug}"
+        eval "${sys_type} install clamav-daemon clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd -y ${debug}"
     fi
     if [  "$?" != 0  ]; then
         logger -e "ClamAVinstallation failed"
