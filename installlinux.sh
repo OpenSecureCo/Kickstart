@@ -146,13 +146,21 @@ installPrerequisites() {
     logger "Installing all necessary utilities for the installation..."
 
     if [ ${sys_type} == "yum" ]; then
-        eval "yum install curl unzip wget libcap -y ${debug}"
+        eval "yum install curl unzip wget libcap epel-release -y ${debug}"
+        eval "amazon-linux-extras install epel -y ${debug}"
+        eval "curl -L https://pkg.osquery.io/rpm/GPG | tee /etc/pki/rpm-gpg/RPM-GPG-KEY-osquery"
+        eval "yum-config-manager --add-repo https://pkg.osquery.io/rpm/osquery-s3-rpm.repo"
+        eval "yum-config-manager --enable osquery-s3-rpm"
     elif [ ${sys_type} == "zypper" ]; then
         eval "zypper -n install curl unzip wget ${debug}"
         eval "zypper -n install libcap-progs ${debug} || zypper -n install libcap2 ${debug}"
     elif [ ${sys_type} == "apt-get" ]; then
         eval "apt-get update -q $debug"
-        eval "apt-get install apt-transport-https curl unzip wget libcap2-bin -y ${debug}"
+        eval "apt-get install apt-transport-https curl unzip wget libcap2-bin epel-release -y ${debug}"
+        eval "export OSQUERY_KEY=1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B"
+        eval "apt-key adv --keyserver keyserver.ubuntu.com --recv-keys $OSQUERY_KEY"
+        eval "add-apt-repository 'deb [arch=amd64] https://pkg.osquery.io/deb deb main'"
+        eval "apt-get update"
     fi
 
     if [  "$?" != 0  ]; then
@@ -183,7 +191,7 @@ addWazuhrepo() {
     logger "Done"
 }
 
-## Wazuh manager
+## Wazuh Agent
 installWazuh() {
 
     logger "Installing the Wazuh agent..."
@@ -203,6 +211,64 @@ installWazuh() {
     startService "wazuh-agent"
 
 }
+
+## ClamAV Install
+installClamAV() {
+
+    logger "Installing the ClamAV..."
+    if [ ${sys_type} == "zypper" ]; then
+        eval "zypper -n install clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd ${debug}"
+    else
+        eval "${sys_type} install clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd -y ${debug}"
+    fi
+    if [  "$?" != 0  ]; then
+        logger -e "ClamAVinstallation failed"
+        rollBack
+        exit 1;
+    else
+        clamavinstalled="1"
+        logger "Done"
+    fi
+    freshclam
+    echo "@hourly /bin/freshclam --quiet" >> /etc/crontab
+    echo "/home/
+    /opt/
+    /usr/bin/
+    /etc/
+    /usr/sbin/" > /opt/scanfolders.txt
+    wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/Freshclam.conf -O /etc/freshclam.conf
+    wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/scan.conf -O /etc/clamd.d/scan.conf
+    mkdir /root/scripts/
+    wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/clamscan.sh -O /root/scripts/clamscan.sh
+    chmod +x /root/scripts/clamscan.sh
+    echo "0 8 * * * /root/scripts/clamscan.sh" >> /etc/crontab
+
+}
+
+## Install OSQUERY
+installOSquery() {
+
+    logger "Installing osquery..."
+    if [ ${sys_type} == "zypper" ]; then
+        eval "WAZUH_MANAGER="$manager" zypper -n install wazuh-agent=${WAZUH_VER}-${WAZUH_REV} ${debug}"
+    else
+        eval "${sys_type} install osquery -y ${debug}"
+        al
+    fi
+    if [  "$?" != 0  ]; then
+        logger -e "OSQUERY installation failed"
+        rollBack
+        exit 1;
+    else
+        osqueryinstalled="1"
+        logger "Done"
+    fi
+
+}
+
+##AuditD Rules and reload
+wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/auditd.conf -O /etc/audit/rules.d/audit.rules
+auditctl -R /etc/audit/rules.d/audit.rules
 
 checkInstalled() {
 
@@ -310,11 +376,15 @@ main() {
         installPrerequisites
         addWazuhrepo
         installWazuh
+        installClamAV
+        installOSquery
     else
         checkInstalled
         installPrerequisites
         addWazuhrepo
         installWazuh
+        installClamAV
+        installOSquery
     fi
 
 }
