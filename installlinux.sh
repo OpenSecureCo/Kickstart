@@ -199,8 +199,6 @@ installWazuh() {
         eval "WAZUH_MANAGER="$manager" zypper -n install wazuh-agent=${WAZUH_VER}-${WAZUH_REV} ${debug}"
     else
         eval "WAZUH_MANAGER="$manager" ${sys_type} install wazuh-agent${sep}${WAZUH_VER}-${WAZUH_REV} -y ${debug}"
-        eval "echo "logcollector.remote_commands=1" >> /var/ossec/etc/local_internal_options.conf"
-        eval "echo "wazuh_command.remote_commands=1" >> /var/ossec/etc/local_internal_options.conf"
     fi
     if [  "$?" != 0  ]; then
         logger -e "Wazuh installation failed"
