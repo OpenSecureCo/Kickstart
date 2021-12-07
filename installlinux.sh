@@ -11,7 +11,8 @@ WAZUH_MAJOR="4.2"
 WAZUH_VER="4.2.5"
 WAZUH_REV="1"
 ow=""
-manager="104.181.152.45"
+manager="logs.socfortress.co"
+password="TNxG9822G=h"
 repogpg="https://packages.wazuh.com/key/GPG-KEY-WAZUH"
 repobaseurl="https://packages.wazuh.com/4.x"
 resources="https://packages.wazuh.com/resources/${WAZUH_MAJOR}"
@@ -198,7 +199,7 @@ installWazuh() {
     if [ ${sys_type} == "zypper" ]; then
         eval "WAZUH_MANAGER="$manager" zypper -n install wazuh-agent=${WAZUH_VER}-${WAZUH_REV} ${debug}"
     else
-        eval "WAZUH_MANAGER="$manager" ${sys_type} install wazuh-agent${sep}${WAZUH_VER}-${WAZUH_REV} -y ${debug}"
+        eval "WAZUH_MANAGER="$manager" WAZUH_REGISTRATION_PASSWORD="$password" ${sys_type} install wazuh-agent${sep}${WAZUH_VER}-${WAZUH_REV} -y ${debug}"
     fi
     if [  "$?" != 0  ]; then
         logger -e "Wazuh installation failed"
