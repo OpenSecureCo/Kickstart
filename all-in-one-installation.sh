@@ -34,6 +34,21 @@ service wazuh-agent start
 service wazuh-agent enable
 
 amazon-linux-extras install epel -y
+
+yum install jq -y
+
+wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/custom-ssh.sh -O /var/ossec/active-response/bin/custom-ssh.sh
+
+wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/custom-suricata.sh -O /var/ossec/active-response/bin/custom-suricata.sh
+
+wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/custom-waf.sh -O /var/ossec/active-response/bin/custom-waf.sh
+
+chown root:ossec /var/ossec/active-response/bin/*
+
+chmod 750 /var/ossec/active-response/bin/*
+
+systemctl restart wazuh-agent
+
 yum install clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd -y
 
 freshclam
