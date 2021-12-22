@@ -9,7 +9,7 @@ PWD=`pwd`
 read -r INPUT_JSON
 SRCIP=$(echo $INPUT_JSON | jq -r .parameters.alert.data.aws.httpRequest.clientIp)
 COMMAND=$(echo $INPUT_JSON | jq -r .command)
-ALERT=$(echo $INPUT_JSON | jq -r .parameters.alert.data.aws.ruleGroupList.terminatingRule.ruleId)
+ALERT=$(echo $INPUT_JSON | jq -r .parameters.alert.data.aws.terminatingRuleId)
 LOG_FILE="${PWD}/../logs/active-responses.log"
 
 #------------------------ Analyze command -------------------------#
