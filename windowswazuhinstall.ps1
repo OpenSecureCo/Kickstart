@@ -6,7 +6,7 @@ Remove-Item 'C:\Program Files (x86)\ossec-agent' -Force -Recurse
 New-Item -Path "C:\" -Name "Wazuh" -ItemType "directory"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
-Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.2.5-1.msi -OutFile wazuh-agent-4.2.5.msi; ./wazuh-agent-4.2.5.msi /q WAZUH_MANAGER='' WAZUH_REGISTRATION_SERVER='' WAZUH_REGISTRATION_PASSWORD='' WAZUH_AGENT_GROUP=''
+Invoke-WebRequest -Uri https://packages.wazuh.com/4.x/windows/wazuh-agent-4.2.5-1.msi -OutFile wazuh-agent-4.2.5.msi; ./wazuh-agent-4.2.5.msi /q WAZUH_MANAGER='logs.socfortress.co' WAZUH_REGISTRATION_SERVER='logs.socfortress.co' WAZUH_AGENT_GROUP='d827'
 
 Write-Host "Installing PowerShell7"
 
