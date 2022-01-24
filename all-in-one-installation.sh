@@ -25,6 +25,10 @@ make install
 
 git clone https://github.com/Neo23x0/signature-base.git
 
+wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/yara_update_rules.sh -O /root/yara_update_rules.sh
+
+chmod +x /root/yara_update_rules.sh
+
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/osquery.conf -O /etc/osquery/osquery.conf
 
 systemctl start osqueryd
@@ -54,8 +58,6 @@ echo "<ossec_config>
 service wazuh-agent start
 service wazuh-agent enable
 
-amazon-linux-extras install epel -y
-
 yum install jq -y
 
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/custom-ssh.sh -O /var/ossec/active-response/bin/custom-ssh.sh
@@ -63,6 +65,8 @@ wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/custom-ssh.sh
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/custom-suricata.sh -O /var/ossec/active-response/bin/custom-suricata.sh
 
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/custom-waf.sh -O /var/ossec/active-response/bin/custom-waf.sh
+
+wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/yara_full_scan.sh -O /var/ossec/active-response/bin/yara_full_scan.sh
 
 cd /opt/
 
@@ -87,6 +91,10 @@ yum install clamav-server clamav-data clamav-update clamav-filesystem clamav cla
 freshclam
 
 echo "@hourly /bin/freshclam --quiet" >> /etc/crontab
+
+echo "0 0 1 * * /bin/bash /root/yara_update_rules.sh" >> /etc/crontab
+
+echo "0 */3 * * * /usr/bin/bash /var/ossec/active-response/bin/yara_full_scan.sh" >> /etc/crontab
 
 echo "/home/
 /opt/
