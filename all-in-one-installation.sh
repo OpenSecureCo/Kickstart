@@ -23,6 +23,8 @@ cd yara-4.1.3
 make
 make install
 
+git clone https://github.com/Neo23x0/signature-base.git
+
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/osquery.conf -O /etc/osquery/osquery.conf
 
 systemctl start osqueryd
