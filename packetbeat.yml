@@ -199,9 +199,9 @@ setup.kibana:
   #username: "elastic"
   #password: "changeme"
   
- output.file:
-  path: "/tmp/packetbeat"
-  filename: packetbeat
+output.file:
+ path: "/tmp/packetbeat"
+ filename: packetbeat
 # ------------------------------ Logstash Output -------------------------------
 #output.logstash:
   # The Logstash hosts
