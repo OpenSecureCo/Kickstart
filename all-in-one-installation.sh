@@ -9,6 +9,7 @@ yum install openssl-devel -y
 yum install file-devel -y
 yum install jansson jansson-devel -y
 yum install flex bison byacc -y
+yum install git -y
 
 cd /opt
 wget https://github.com/VirusTotal/yara/archive/refs/tags/v4.1.3.tar.gz
