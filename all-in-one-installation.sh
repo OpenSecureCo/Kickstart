@@ -43,6 +43,18 @@ wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/custom-surica
 
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/custom-waf.sh -O /var/ossec/active-response/bin/custom-waf.sh
 
+cd /opt/
+
+wget https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-7.16.3-x86_64.rpm
+
+rpm -iv packetbeat-7.16.3-x86_64.rpm 
+
+wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/packetbeat.yml -O /etc/packetbeat/packetbeat.yml
+
+systemctl enable packetbeat
+
+systemctl start packetbeat
+
 chown root:ossec /var/ossec/active-response/bin/*
 
 chmod 750 /var/ossec/active-response/bin/*
