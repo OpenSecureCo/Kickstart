@@ -3,6 +3,24 @@ curl -L https://pkg.osquery.io/rpm/GPG | tee /etc/pki/rpm-gpg/RPM-GPG-KEY-osquer
 yum-config-manager --add-repo https://pkg.osquery.io/rpm/osquery-s3-rpm.repo
 yum-config-manager --enable osquery-s3-rpm
 yum install osquery -y
+amazon-linux-extras install epel -y
+yum install autoconf libtool -y
+yum install openssl-devel -y
+yum install file-devel -y
+yum install jansson jansson-devel -y
+yum install flex bison byacc -y
+
+cd /opt
+wget https://github.com/VirusTotal/yara/archive/refs/tags/v4.1.3.tar.gz
+
+tar xzvf v4.1.3.tar.gz
+
+cd yara-4.1.3
+
+./bootstrap.sh
+./configure --enable-cuckoo --enable-magic --enable-dotnet
+make
+make install
 
 wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/osquery.conf -O /etc/osquery/osquery.conf
 
