@@ -65,6 +65,7 @@ write-host ('Installing Sysmon for new configuration file...')
      Write-Host "Sysmon Uninstall Failed."
      exit 1
  }
+ }
     
 if (Test-Path -Path $sysinternals_folder) {
     write-host ('Sysinternals folder already exists')
