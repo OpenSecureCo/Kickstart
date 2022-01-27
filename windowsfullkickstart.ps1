@@ -90,10 +90,10 @@ if (Test-Path -Path $sysinternals_folder) {
 
 
 write-host ('Installing PowerShell7')
-$file = 'C:\Windows\PowerShell7\alienvault_otx.ps1'
 
-#If the file does not exist, install PowerShell7
-if (-not(Test-Path -Path $file -PathType Leaf)) {
+
+#If PowerShell7 does not exist then install it
+if (-not(Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "PowerShell 7-x64"})) {
      try {
         Invoke-WebRequest -Uri https://github.com/PowerShell/PowerShell/releases/download/v7.2.0/PowerShell-7.2.0-win-x64.msi -OutFile PowerShell-7.2.0-win-x64.msi; ./PowerShell-7.2.0-win-x64.msi /q
         New-Item -Path "C:\Windows" -Name "PowerShell7" -ItemType "directory"
@@ -106,7 +106,7 @@ if (-not(Test-Path -Path $file -PathType Leaf)) {
          throw $_.Exception.Message
      }
  }
-# If the file already exists, show the message and do nothing.
+# If the PowerShell7 already exists, show the message and do nothing.
  else {
      Write-Host "PowerShell7 Already Exists."
  }
