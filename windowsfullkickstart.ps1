@@ -57,8 +57,10 @@ if (Test-Path -Path $sysinternals_folder) {
     param (
     [string]$path=[Environment]::GetFolderPath("Windows")) 
     write-host ('Installing Sysmon with new config')
-	Set-Location $path\Sysmon
+    Set-Location $path\Sysmon
     .\sysmon64.exe -u force
+    Remove-Item 'C:\Windows\Sysmon' -Recurse
+    Expand-Archive -path $OutPath\$output -destinationpath $sysinternals_folder
     Invoke-Command {reg.exe ADD HKCU\Software\Sysinternals /v EulaAccepted /t REG_DWORD /d 1 /f}
     Invoke-Command {reg.exe ADD HKU\.DEFAULT\Software\Sysinternals /v EulaAccepted /t REG_DWORD /d 1 /f}
     Start-Process -FilePath $sysinternals_folder\Sysmon64.exe -Argumentlist @("-i", "$OutPath\$sysmonconfig_file")  
