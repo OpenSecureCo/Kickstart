@@ -78,10 +78,9 @@ if (Test-Path -Path $sysinternals_folder) {
     Invoke-WebRequest -Uri $sigcheck_downloadlink -OutFile 'C:\Program Files\sysinternals\sigcheck.ps1'
     $serviceName = 'Sysmon64'
     If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
-    Stop-Service -Name $serviceName
-    param (
-    [string]$path=[Environment]::GetFolderPath("Windows")) 
+    Stop-Service -Name $serviceName 
     write-host ('Installing Sysmon with new config')
+    $path = 'C:\Windows\'
     Set-Location $path\Sysmon
     .\sysmon64.exe -u force
     Remove-Item 'C:\Windows\Sysmon' -Recurse
