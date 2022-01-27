@@ -182,6 +182,13 @@ If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
       Stop-Service -Name "Wazuh"
       Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/local_internal_options.conf -OutFile 'C:\Program Files (x86)\ossec-agent\local_internal_options.conf'
       Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/agent_ossec.conf -OutFile 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+      $filePath = 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+      $tempFilePath = "$env:TEMP\$($filePath | Split-Path -Leaf)"
+      $find = 'MANAGER'
+      $replace = $WAZUH_MANAGER
+      (Get-Content -Path $filePath) -replace $find, $replace | Add-Content -Path $tempFilePath
+      Remove-Item -Path $filePath
+      Move-Item -Path $tempFilePath -Destination $filePath
       Start-Service -Name "Wazuh"
 
       }
