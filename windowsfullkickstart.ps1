@@ -60,7 +60,6 @@ write-host ('Installing Sysmon for new configuration file...')
     Set-Location $path\Sysmon
     .\sysmon64.exe -u force
     Start-Sleep -s 5
-    Remove-Item 'C:\Windows\Sysmon' -Recurse -Force
     else {
      Write-Host "Sysmon Uninstall Failed."
      exit 1
