@@ -23,6 +23,28 @@ $sigcheck_downloadlink = 'https://raw.githubusercontent.com/OpenSecureCo/Kicksta
 #Start-Sleep -s 15
 #Remove-Item 'C:\Program Files (x86)\ossec-agent' -Force -Recurse
 #New-Item -Path "C:\" -Name "Wazuh" -ItemType "directory"
+write-host ('Verifying Network Connection To $WAZUH_MANAGER ...')
+$X = 0
+    do {
+      Write-Output "Waiting for network"
+      Start-Sleep -s 5
+      $X += 1
+    } until(($connectreult = Test-NetConnection $WAZUH_MANAGER -Port 1515 | ? { $_.TcpTestSucceeded }) -or $X -eq 3)
+
+    if ($connectreult.TcpTestSucceeded -eq $true){
+      Try
+      {
+      Invoke-WebRequest -Uri $wazuh_downloadlink -OutFile $OutPath\$output
+      write-host ('Connection to $WAZUH_MANAGER successful ...')
+      }
+      Catch
+      {
+          $ErrorMessage = $_.Exception.Message
+          $FailedItem = $_.Exception.ItemName
+          Write-Error -Message "$ErrorMessage $FailedItem"
+          exit 1
+      }
+      
 write-host ('Installing Sysmon for new configuration file...')
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
