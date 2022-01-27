@@ -17,12 +17,12 @@ $sysmonconfig_file = 'sysmonconfig-export.xml'
 $autorunsps1_downloadlink = 'https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/autoruns.ps1'
 $logonsession_downloadlink = 'https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/logonsessions.ps1'
 $sigcheck_downloadlink = 'https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/sigcheck.ps1'
-Stop-Service -Name "Wazuh"
-$MyApp = Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "Wazuh Agent"}
-$MyApp.Uninstall()
-Start-Sleep -s 15
-Remove-Item 'C:\Program Files (x86)\ossec-agent' -Force -Recurse
-New-Item -Path "C:\" -Name "Wazuh" -ItemType "directory"
+#Stop-Service -Name "Wazuh"
+#$MyApp = Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "Wazuh Agent"}
+#$MyApp.Uninstall()
+#Start-Sleep -s 15
+#Remove-Item 'C:\Program Files (x86)\ossec-agent' -Force -Recurse
+#New-Item -Path "C:\" -Name "Wazuh" -ItemType "directory"
 write-host ('Uninstalling Sysmon for new configuration file...')
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
