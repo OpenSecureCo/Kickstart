@@ -17,6 +17,9 @@ $sysmonconfig_file = 'sysmonconfig-export.xml'
 $autorunsps1_downloadlink = 'https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/autoruns.ps1'
 $logonsession_downloadlink = 'https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/logonsessions.ps1'
 $sigcheck_downloadlink = 'https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/sigcheck.ps1'
+$autorunsps1_file = 'autoruns.ps1'
+$logonsession_file = 'logonsessions.ps1'
+$sigcheck_file = 'sigcheck.ps1'
 #Stop-Service -Name "Wazuh"
 #$MyApp = Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "Wazuh Agent"}
 #$MyApp.Uninstall()
@@ -70,9 +73,9 @@ if (Test-Path -Path $sysinternals_folder) {
     Expand-Archive -path $OutPath\$output -destinationpath $sysinternals_folder
     Start-Sleep -s 10
     Invoke-WebRequest -Uri $sysmonconfig_downloadlink -OutFile $OutPath\$sysmonconfig_file
-    Invoke-WebRequest -Uri $autorunsps1_downloadlink -OutFile $OutPath\$sysmonconfig_file
-    Invoke-WebRequest -Uri $logonsession_downloadlink -OutFile $OutPath\$sysmonconfig_file
-    Invoke-WebRequest -Uri $sigcheck_downloadlink -OutFile $OutPath\$sysmonconfig_file
+    Invoke-WebRequest -Uri $autorunsps1_downloadlink -OutFile $OutPath\$autorunsps1_file
+    Invoke-WebRequest -Uri $logonsession_downloadlink -OutFile $OutPath\$logonsession_file
+    Invoke-WebRequest -Uri $sigcheck_downloadlink -OutFile $OutPath\$sigcheck_file
     $serviceName = 'Sysmon64'
     If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
     Stop-Service -Name $serviceName
