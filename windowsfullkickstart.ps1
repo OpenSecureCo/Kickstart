@@ -121,8 +121,6 @@ if (-not(Get-WmiObject -Class Win32_Product | Where-Object{$_.Name -eq "PowerShe
         New-Item -Path "C:\Windows" -Name "PowerShell7" -ItemType "directory"
         cd C:\Windows\PowerShell7
         Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/alienvault_otx.ps1 -OutFile alienvault_otx.ps1
-        cd 'C:\Program Files (x86)\ossec-agent\active-response\bin'
-        Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/otx.cmd -OutFile otx.cmd
      }
      catch {
          throw $_.Exception.Message
@@ -140,6 +138,8 @@ If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
     Stop-Service -Name "Wazuh"
     Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/local_internal_options.conf -OutFile 'C:\Program Files (x86)\ossec-agent\local_internal_options.conf'
     Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/agent_ossec.conf -OutFile 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+    cd 'C:\Program Files (x86)\ossec-agent\active-response\bin'
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/otx.cmd -OutFile otx.cmd
     $filePath = 'C:\Program Files (x86)\ossec-agent\ossec.conf'
     $tempFilePath = "$env:TEMP\$($filePath | Split-Path -Leaf)"
     $find = 'MANAGER'
@@ -182,6 +182,8 @@ If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
       Stop-Service -Name "Wazuh"
       Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/local_internal_options.conf -OutFile 'C:\Program Files (x86)\ossec-agent\local_internal_options.conf'
       Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/agent_ossec.conf -OutFile 'C:\Program Files (x86)\ossec-agent\ossec.conf'
+      cd 'C:\Program Files (x86)\ossec-agent\active-response\bin'
+      Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/otx.cmd -OutFile otx.cmd
       $filePath = 'C:\Program Files (x86)\ossec-agent\ossec.conf'
       $tempFilePath = "$env:TEMP\$($filePath | Split-Path -Leaf)"
       $find = 'MANAGER'
