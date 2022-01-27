@@ -23,7 +23,7 @@ $sigcheck_downloadlink = 'https://raw.githubusercontent.com/OpenSecureCo/Kicksta
 #Start-Sleep -s 15
 #Remove-Item 'C:\Program Files (x86)\ossec-agent' -Force -Recurse
 #New-Item -Path "C:\" -Name "Wazuh" -ItemType "directory"
-write-host ('Uninstalling Sysmon for new configuration file...')
+write-host ('Installing Sysmon for new configuration file...')
 
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
 
@@ -111,7 +111,7 @@ if (-not(Test-Path -Path $file -PathType Leaf)) {
      Write-Host "PowerShell7 Already Exists."
  }
 
-$serviceName = 'OssecSvc'
+$serviceName = 'Wazuh'
 If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
     write-host ('Wazuh Agent Is Already Installed')
     write-host ('Stopping Wazuh To Configure Advanced Features')
@@ -158,8 +158,8 @@ If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
       Start-Process "msiexec.exe" -ArgumentList $installArgs -Wait
       Start-Sleep -s 10
       Stop-Service -Name "Wazuh"
-      Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/local_internal_options.conf -OutFile C:\Program Files (x86)\ossec-agent\local_internal_options.conf
-      Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/agent_ossec.conf -OutFile C:\Program Files (x86)\ossec-agent\ossec.conf
+      Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/local_internal_options.conf -OutFile 'C:\Program Files (x86)\ossec-agent\local_internal_options.conf'
+      Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/agent_ossec.conf -OutFile 'C:\Program Files (x86)\ossec-agent\ossec.conf'
       Start-Service -Name "Wazuh"
 
       }
