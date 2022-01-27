@@ -138,8 +138,8 @@ If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
     write-host ('Wazuh Agent Is Already Installed')
     write-host ('Stopping Wazuh To Configure Advanced Features')
     Stop-Service -Name "Wazuh"
-    Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/local_internal_options.conf -OutFile C:\Program Files (x86)\ossec-agent\local_internal_options.conf
-    Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/agent_ossec.conf -OutFile C:\Program Files (x86)\ossec-agent\ossec.conf
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/local_internal_options.conf -OutFile 'C:\Program Files (x86)\ossec-agent\local_internal_options.conf'
+    Invoke-WebRequest -Uri https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/agent_ossec.conf -OutFile 'C:\Program Files (x86)\ossec-agent\ossec.conf'
     $filePath = 'C:\Program Files (x86)\ossec-agent\ossec.conf'
     $tempFilePath = "$env:TEMP\$($filePath | Split-Path -Leaf)"
     $find = 'MANAGER'
