@@ -146,6 +146,7 @@ If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
     (Get-Content -Path $filePath) -replace $find, $replace | Add-Content -Path $tempFilePath
     Remove-Item -Path $filePath
     Move-Item -Path $tempFilePath -Destination $filePath
+    write-host ('Starting Wazuh')
     Start-Service -Name "Wazuh"
 
 
