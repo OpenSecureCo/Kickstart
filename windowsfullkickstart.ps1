@@ -52,6 +52,20 @@ $X = 0
       
 write-host ('Installing Sysmon for new configuration file...')
 
+    $serviceName = 'Sysmon64'
+    If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
+    Stop-Service -Name $serviceName 
+    write-host ('Installing Sysmon with new config')
+    $path = 'C:\Windows\'
+    Set-Location $path\Sysmon
+    .\sysmon64.exe -u force
+    Start-Sleep -s 5
+    Remove-Item 'C:\Windows\Sysmon' -Recurse -Force
+    else {
+     Write-Host "Sysmon Uninstall Failed."
+     exit 1
+ }
+    
 if (Test-Path -Path $sysinternals_folder) {
     write-host ('Sysinternals folder already exists')
 } else {
@@ -78,16 +92,7 @@ if (Test-Path -Path $sysinternals_folder) {
     Invoke-WebRequest -Uri $sigcheck_downloadlink -OutFile 'C:\Program Files\sysinternals\sigcheck.ps1'
     $serviceName = 'Sysmon64'
     If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
-    Stop-Service -Name $serviceName 
-    write-host ('Installing Sysmon with new config')
-    $path = 'C:\Windows\'
-    Set-Location $path\Sysmon
-    .\sysmon64.exe -u force
-    Remove-Item 'C:\Windows\Sysmon' -Recurse
-    Expand-Archive -path $OutPath\$output -destinationpath $sysinternals_folder
-    Invoke-Command {reg.exe ADD HKCU\Software\Sysinternals /v EulaAccepted /t REG_DWORD /d 1 /f}
-    Invoke-Command {reg.exe ADD HKU\.DEFAULT\Software\Sysinternals /v EulaAccepted /t REG_DWORD /d 1 /f}
-    Start-Process -FilePath $sysinternals_folder\Sysmon64.exe -Argumentlist @("-i", "$OutPath\$sysmonconfig_file")  
+    write-host ('Sysmon is already installed')  
     } else {
     write-host ('Installing Sysmon')
     Invoke-Command {reg.exe ADD HKCU\Software\Sysinternals /v EulaAccepted /t REG_DWORD /d 1 /f}
