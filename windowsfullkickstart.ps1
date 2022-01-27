@@ -24,7 +24,7 @@ $sigcheck_downloadlink = 'https://raw.githubusercontent.com/OpenSecureCo/Kicksta
 #Remove-Item 'C:\Program Files (x86)\ossec-agent' -Force -Recurse
 #New-Item -Path "C:\" -Name "Wazuh" -ItemType "directory"
 [Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
-write-host ('Verifying Network Connection To $WAZUH_MANAGER ...')
+write-host ('Verifying Network Connection To WAZUH MANAGER ...')
 
 $X = 0
     do {
@@ -36,8 +36,7 @@ $X = 0
     if ($connectreult.TcpTestSucceeded -eq $true){
       Try
       {
-      Invoke-WebRequest -Uri $wazuh_downloadlink -OutFile $OutPath\$output
-      write-host ('Connection to $WAZUH_MANAGER successful ...')
+      write-host ('Connection to WAZUH_MANAGER successful ...')
       }
       Catch
       {
