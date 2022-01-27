@@ -55,7 +55,7 @@ if (Test-Path -Path $sysinternals_folder) {
     If (Get-Service $serviceName -ErrorAction SilentlyContinue) {
     Stop-Service -Name $serviceName
     param (
-    [string]$path=[Environment]::GetFolderPath("Windows") 
+    [string]$path=[Environment]::GetFolderPath("Windows")) 
     write-host ('Installing Sysmon with new config')
 	Set-Location $path\Sysmon
     .\sysmon64.exe -u force
