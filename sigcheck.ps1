@@ -14,7 +14,7 @@ $ErrorActionPreference = "SilentlyContinue"
 $sigcheck_running = Get-Process sigcheck -ErrorAction SilentlyContinue
 if ($sigcheck_running) { Exit }
 # RUN SIGCHECK AND STORE CSV
-$Sigcheck_Output_CSV = c:\"Program Files"\Sysinternals\sigcheck.exe -nobanner -accepteula -u -c -v -vt -e -s C:\Users\
+$Sigcheck_Output_CSV = c:\"Program Files"\Sysinternals\sigcheck.exe -nobanner -accepteula -u -c -v -vt -s C:\Users\
 # REMOVE SPACES IN CSV HEADER AND CONVERT TO ARRAY
 $Sigcheck_Output_Array = $Sigcheck_Output_CSV.PSObject.BaseObject.Trim(' ') -Replace '\s','' | ConvertFrom-Csv
 # GO THRU THE ARRAY, CONVERT TO JSON AND APPEND TO active-responses.log
