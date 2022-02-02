@@ -386,7 +386,7 @@ installPacketbeat() {
 ## ClamAV Install
 installClamav() {
     
-    logger "Installing the ClamAV..."
+    logger "Installing ClamAV..."
     if [ ${sys_type} == "yum" ]; then
         eval "yum install clamav-server clamav-data clamav-update clamav-filesystem clamav clamav-scanner-systemd clamav-devel clamav-lib clamav-server-systemd -y ${debug}"
         eval "freshclam ${debug}"
