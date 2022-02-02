@@ -334,7 +334,7 @@ installOsquery() {
     
     logger "Installing the Osquery Agent..."
     if [ ${sys_type} == "yum" ]; then
-        eval "curl -L https://pkg.osquery.io/rpm/GPG | tee /etc/pki/rpm-gpg/RPM-GPG-KEY-osquery ${debug}"
+        eval "curl -L --silent https://pkg.osquery.io/rpm/GPG | tee /etc/pki/rpm-gpg/RPM-GPG-KEY-osquery ${debug}"
         eval "yum-config-manager --add-repo https://pkg.osquery.io/rpm/osquery-s3-rpm.repo ${debug}"
         eval "yum-config-manager --enable osquery-s3-rpm ${debug}"
         eval "yum install osquery -y ${debug}"
@@ -571,11 +571,13 @@ networkCheck() {
     if [ ${connectionReg} != "Connected" ]; then
         logger -e "No internet connection to $MANAGER on $WAZUHPORTREG. To perform an offline installation, please run this script with the option -d/--download-packages in a computer with internet access, copy the wazuh-packages.tar file generated on this computer and run again this script."
         exit 1;
+    else echo "Connection test to $MANAGER on $WAZUHPORTREG was successful.
     fi
     connectionLog=$(sleep 2 | telnet $MANAGER $WAZUHPORTLOG | grep Connected | awk '{print $1}')
     if [ ${connectionLog} != "Connected" ]; then
-        logger -e "No internet connection to $MANAGER on $WAZUHPORTREG. To perform an offline installation, please run this script with the option -d/--download-packages in a computer with internet access, copy the wazuh-packages.tar file generated on this computer and run again this script."
+        logger -e "No internet connection to $MANAGER on $WAZUHPORTLOG. To perform an offline installation, please run this script with the option -d/--download-packages in a computer with internet access, copy the wazuh-packages.tar file generated on this computer and run again this script."
         exit 1;
+    else echo "Connection test to $MANAGER on $WAZUHPORTLOG was successful.
     fi
 
 }
