@@ -465,7 +465,7 @@ checkInstalled() {
         fi    
     fi
 
-    YARAFILE=/root/yara_update_rules.sh
+    YARAFILE=/root/scripts/yara_update_rules.sh
     yarainstalled=$(test -f $YARAFILE && echo "$FILE exists.")
 
     if [ -n "${yarainstalled}" ]; then
