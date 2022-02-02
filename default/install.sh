@@ -567,13 +567,13 @@ overwrite() {
 }
 
 networkCheck() {
-    connectionReg=$(sleep 2 | telnet $MANAGER $WAZUHPORTREG | grep Connected | awk '{print $1}')
+    connectionReg=$(sleep 2 | telnet $MANAGER $WAZUHPORTREG 2>/dev/null | grep Connected | awk '{print $1}')
     if [ ${connectionReg} != "Connected" ]; then
         logger -e "No internet connection to $MANAGER on $WAZUHPORTREG. To perform an offline installation, please run this script with the option -d/--download-packages in a computer with internet access, copy the wazuh-packages.tar file generated on this computer and run again this script."
         exit 1;
     else echo "Connection test to $MANAGER on $WAZUHPORTREG was successful."
     fi
-    connectionLog=$(sleep 2 | telnet $MANAGER $WAZUHPORTLOG | grep Connected | awk '{print $1}')
+    connectionLog=$(sleep 2 | telnet $MANAGER $WAZUHPORTLOG 2>/dev/null | grep Connected | awk '{print $1}')
     if [ ${connectionLog} != "Connected" ]; then
         logger -e "No internet connection to $MANAGER on $WAZUHPORTLOG. To perform an offline installation, please run this script with the option -d/--download-packages in a computer with internet access, copy the wazuh-packages.tar file generated on this computer and run again this script."
         exit 1;
