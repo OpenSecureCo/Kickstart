@@ -80,7 +80,7 @@ rollBack() {
         fi 
         eval "rm -rf /usr/local/signature-base* ${debug}"
         eval "rm -rf /opt/yara* ${debug}"
-        eval "rm -rf /root/yara_update_rules.sh ${debug}"
+        eval "rm -rf /root/scripts/yara_update_rules.sh ${debug}"
     fi
 
     if [ -n "${osqueryinstalled}" ]; then
