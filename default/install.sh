@@ -3,7 +3,7 @@
 ## Check if system is based on yum or apt-get
 char="."
 debug='>> /var/log/opensecure-installation.log 2>&1'
-MANAGER="logs.vervantis.com"
+MANAGER="104.181.152.45"
 WAZUH_MAJOR="4.2"
 WAZUH_VER="4.2.5"
 WAZUH_REV="1"
@@ -524,12 +524,12 @@ checkInstalled() {
         fi  
     fi
 
-    if [ -z "${wazuhinstalled}" ] && [ -z "${veloinstalled}" ] && [ -z "${yarainstalled}" ] && [ -z "${osqueryinstalled}" ] && [ -z "${packetbeatinstalled}" ] && [ -z "${clamavinstalled}" ] && [ -n "${uninstall}" ]; then 
-        logger -e "No SOCFortress components were found on the system."
+    if [ -z "${wazuhinstalled}" ] && [ -z "${yarainstalled}" ] && [ -z "${osqueryinstalled}" ] && [ -z "${packetbeatinstalled}" ] && [ -z "${clamavinstalled}" ] && [ -n "${uninstall}" ]; then 
+        logger -e "No Vervantis components were found on the system."
         exit 1;        
     fi
 
-    if [ -n "${wazuhinstalled}" ] || [ -n "${veloinstalled}" ] || [ -n "${yarainstalled}" ] || [ -n "${osqueryinstalled}" ] || [ -n "${packetbeatinstalled}" ] || [ -n "${clamavinstalled}" ]; then 
+    if [ -n "${wazuhinstalled}" ] || [ -n "${yarainstalled}" ] || [ -n "${osqueryinstalled}" ] || [ -n "${packetbeatinstalled}" ] || [ -n "${clamavinstalled}" ]; then 
         if [ -n "${ow}" ]; then
              overwrite
         
@@ -537,7 +537,7 @@ checkInstalled() {
             logger -w "Removing the installed items"
             rollBack
         else
-            logger -e "All the SOCFortress componets were found on this host. If you want to overwrite the current installation, run this script back using the option -o/--overwrite. NOTE: This will erase all the existing configuration and data."
+            logger -e "All the Vervantis componets were found on this host. If you want to overwrite the current installation, run this script back using the option -o/--overwrite. NOTE: This will erase all the existing configuration and data."
             exit 1;
         fi
     fi          
