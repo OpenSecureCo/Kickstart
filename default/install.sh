@@ -3,7 +3,7 @@
 ## Check if system is based on yum or apt-get
 char="."
 debug='>> /var/log/opensecure-installation.log 2>&1'
-MANAGER="104.181.152.45"
+MANAGER="logs.vervantis.com"
 WAZUH_MAJOR="4.2"
 WAZUH_VER="4.2.5"
 WAZUH_REV="1"
