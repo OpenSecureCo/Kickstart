@@ -104,6 +104,11 @@ if (Test-Path -Path $sysinternals_folder) {
                 {
                 & $SysmonExePath -u 
                 }
+    $SysmonExePath = (get-command sysmon.exe).Path
+    if ($Uninstall -eq "Force")
+                {
+                & $SysmonExePath -u 
+                }
   $OutPath = $env:TMP
   $output = $sysinternals_zip
   New-Item -Path "C:\Program Files" -Name "sysinternals" -ItemType "directory"
