@@ -197,7 +197,7 @@ installPrerequisites() {
     logger "Installing all necessary utilities for the installation..."
 
     if [ ${sys_type} == "yum" ]; then
-        eval "yum install curl unzip wget libcap telnet jq -y ${debug}"
+        eval "yum install curl unzip wget libcap telnet dos2unix jq -y ${debug}"
         eval "amazon-linux-extras install epel -y ${debug}"
     elif [ ${sys_type} == "zypper" ]; then
         eval "zypper -n install curl unzip wget ${debug}"         
@@ -299,6 +299,8 @@ installYara() {
         eval "/root/scripts/yara_update_rules.sh ${debug}"
         eval "chown root:ossec /var/ossec/active-response/bin/yara_full_scan.sh ${debug}"
         eval "chmod 750 /var/ossec/active-response/bin/yara_full_scan.sh ${debug}"
+        eval "dos2unix /var/ossec/active-response/bin/yara_full_scan.sh ${debug}"
+        eval "dos2unix /root/scripts/yara_update_rules.sh ${debug}"
     else
         eval "apt-get install automake libtool make gcc pkg-config git -y ${debug}"
         eval "wget https://github.com/VirusTotal/yara/archive/refs/tags/v4.1.3.tar.gz -O /opt/v4.1.3.tar.gz ${debug}"
@@ -317,6 +319,8 @@ installYara() {
         eval "/root/scripts/yara_update_rules.sh ${debug}"
         eval "chown root:ossec /var/ossec/active-response/bin/yara_full_scan.sh ${debug}"
         eval "chmod 750 /var/ossec/active-response/bin/yara_full_scan.sh ${debug}"
+        eval "dos2unix /var/ossec/active-response/bin/yara_full_scan.sh ${debug}"
+        eval "dos2unix /root/scripts/yara_update_rules.sh ${debug}"
     fi
     if [  "$?" != 0  ]; then
         logger -e "Yara installation failed"
@@ -339,6 +343,7 @@ installOsquery() {
         eval "yum-config-manager --enable osquery-s3-rpm ${debug}"
         eval "yum install osquery -y ${debug}"
         eval "wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/$CUSTOMER/osquery.conf -O /etc/osquery/osquery.conf ${debug}"
+        eval "dos2unix /etc/osquery/osquery.conf ${debug}"
     else
         eval "export OSQUERY_KEY=1484120AC4E9F8A1A577AEEE97A80C63C9D8B80B ${debug}"
         eval "apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys $OSQUERY_KEY ${debug}"
@@ -346,6 +351,7 @@ installOsquery() {
         eval "apt-get update ${debug}"
         eval "apt-get install osquery ${debug}"
         eval "wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/$CUSTOMER/osquery.conf -O /etc/osquery/osquery.conf ${debug}"
+        eval "dos2unix /etc/osquery/osquery.conf ${debug}"
     fi
     if [  "$?" != 0  ]; then
         logger -e "Osquery installation failed"
@@ -366,10 +372,12 @@ installPacketbeat() {
         eval "wget https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-7.16.3-x86_64.rpm -O /opt/packetbeat-7.16.3-x86_64.rpm ${debug}"
         eval "rpm -i /opt/packetbeat-7.16.3-x86_64.rpm ${debug}"
         eval "wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/$CUSTOMER/packetbeat.yml -O /etc/packetbeat/packetbeat.yml ${debug}"
+        eval "dos2unix /etc/packetbeat/packetbeat.yml ${debug}"
     else
         eval "wget https://artifacts.elastic.co/downloads/beats/packetbeat/packetbeat-7.16.3-amd64.deb -O /opt/packetbeat-7.16.3-amd64.deb ${debug}"
         eval "dpkg -i /opt/packetbeat-7.16.3-amd64.deb ${debug}"
         eval "wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/$CUSTOMER/packetbeat.yml -O /etc/packetbeat/packetbeat.yml ${debug}"
+        eval "dos2unix /etc/packetbeat/packetbeat.yml ${debug}"
     fi
     if [  "$?" != 0  ]; then
         logger -e "Packetbeat installation failed"
@@ -414,6 +422,9 @@ installClamav() {
         eval "mkdir /root/scripts/ ${debug}"
         eval "wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/$CUSTOMER/clamscan.sh -O /root/scripts/clamscan.sh ${debug}"
         eval "chmod +x /root/scripts/clamscan.sh ${debug}"
+        eval "dos2unix /etc/freshclam.conf ${debug}"
+        eval "dos2unix /etc/clamd.d/scan.conf ${debug}"
+        eval "dos2unix /root/scripts/clamscan.sh ${debug}"
     fi
     if [  "$?" != 0  ]; then
         logger -e "ClamAV installation failed"
@@ -432,6 +443,8 @@ installAuditctl() {
     logger "Installing auditctl..."
     if [ ${sys_type} == "yum" ]; then
         eval "wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/$CUSTOMER/auditd.conf -O /etc/audit/rules.d/audit.rules ${debug}" 
+        eval "dos2unix /etc/audit/rules.d/audit.rules ${debug}"
+        sleep 2
         eval "auditctl -R /etc/audit/rules.d/audit.rules ${debug}"
     else
         eval "wget https://raw.githubusercontent.com/OpenSecureCo/Kickstart/main/$CUSTOMER/auditd.conf -O /etc/audit/rules.d/audit.rules ${debug}"
